@@ -1,0 +1,91 @@
+# Config file joplin-webarchive
+#
+
+# Get this token in menu Tools|Option|Web Clipper (« Advanced options »)
+# If you use the CLI without graphical interface, run : 
+#	sqlite3 ~/.config/joplin/database.sqlite "select value from settings where key = 'api.token'"
+joplin_token: add-your-please-not-mine
+
+# Folder used. If it does not exist, it will be created
+cache_folder: "Automatic Cache"
+
+# To easily retrieve internal_note. It will be automatically created with given title
+internal_note_guid: f5084df71dd73e7683203d400b12c72f
+internal_note_title: "Joplin-Scraper Internal config (YAML)"
+
+update_ts_guid: 4e7d342049814f7fb536a381c9a45a2f
+update_ts_title: "Update Timestamps (INTERNAL)"
+
+# Some salt when using MD5. No reason to modify it. 
+# Except if you removed joplin-webarchive folder and want to recreate a new folder. 
+# As it seems removing a note/folder and recreating a note with same uuid might result
+# in joplin sync corruption.
+uuid_salt: "Adding some salt again"
+# Maybe I shouldn’t have used this feature ? Anyway, there is only one call to the generate_uuid...
+# so it’s very it could be easily changed in the future.
+
+#
+# Defaults for first run which will be written on the yaml internal_note
+# 
+
+# After this number of days, we will want to save a new cached version
+# Use 0 or a very long value (100 years !) to disable this feature
+# In my opinion, it should not be automatic.
+cache_refresh: 0
+
+# Don’t worry, once parsed, each link will have a cache page, where you may edit frequency by hand.
+
+# If we found a new link, should we try to create a new cache if the existant is older than this number of days ?
+#   0 / null / no : always
+#   positive number, if yes, if it is older than $number days.
+# If you don’t want to use this feature, set it 100 years old. (36500 days -> a hundred years)
+force_refresh_on_new_link_after: 90
+
+#
+# We will only store copies, so choose formats here
+#
+# Multiple options are of course possible
+#
+
+# If by default you don’t want to cache anything 
+nocache: yes
+# You may however :
+#  - create specifics with nocache: no for URL matching a regex
+#  - or write " (cache)" just after an URL to force caching 
+#
+# Similarly " [nocache]" / " (nocache)" and " [no cache]" / " (no cache)" will always prevent an URL from been cached.
+# Notice the quoted space, otherwise the parser might think it is part of the URL.
+#
+
+# Store a text copy (lynx -dump)
+store_txt: no
+# Store a markdown copy (pandoc)
+store_md: yes
+# Store pdf (wkhtmltopdf)
+store_pdf: yes
+# Store png (shutter and/or cutycapt)
+# Joplin API before version 1.7.11 recompresses images making them unreadable
+# See https://github.com/laurent22/joplin/issues/4655
+# So update is highly recommended ! (once available).
+store_png: yes 
+# Store videos (Youtube Downloader) - get it on http://rg3.github.io/youtube-dl/
+store_videos: yes
+
+# Shall we add thumbnails ? (ie, creates an image at each update)
+# requires shutter and/or cutycapt AND ImageMagick
+create_thumbnail: yes
+thumbnail_size: "96x96"
+
+# Per site specifics
+specifics: 
+  - name: fakenamegenerator  # Who wants to cache a random name generator ? Not me !
+    regex: "^https://[a-z]+.fakenamegenerator.com/"
+    nocache: yes 
+  - name: youtube # Youtube PDF / TXT / Markdown Scraper isn’t a win. 
+    regex: "https?://((www.)?youtube.com|youtu.be)/"
+    store_pdf: no
+    store_txt: no
+    store_md: no
+    cache_refresh: 0  # I think YT videos never change
+    force_refresh_on_new_link_after: 0
+
