@@ -86,6 +86,7 @@ specifics:
     store_pdf: no
     store_txt: no
     store_md: no
+    store_videos: yes
     cache_refresh: 0  # I think YT videos never change
     force_refresh_on_new_link_after: 0
 
