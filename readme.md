@@ -1,5 +1,4 @@
-joplin-webarchive.py
-=-=--=-=-=-=-=-=-=-=
+# joplin-webarchive.py
 
 I don’t use the WebClipper (should I ?), but I do like to keep a cached version of linked URLs in my notes.
 
@@ -8,7 +7,7 @@ of URLs inside Joplin (in the form of a new note), and modifies notes by adding 
 
 Behaviour is configurable per URLs, according to regex. See config.yaml for documentation on this
 matter. You may save URL as text (lynx -dump), markdown page (pandoc), PNG webshots (cutycapt), or 
-PDF (wkhtmltopdf). 
+PDF (wkhtmltopdf).  As well as videos ! (youtube-dl).
 
 By default, you need to write " (cache)" or " [cache]" after an URL to force caching it. The parser will
 replace this with a link to a cache archive page. This cache archive will be in a seperated folder.
